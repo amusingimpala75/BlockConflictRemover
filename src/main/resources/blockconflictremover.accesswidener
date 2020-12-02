@@ -1,0 +1,4 @@
+accessWidener	v1	named
+mutable field net/minecraft/block/Block id I
+mutable field net/minecraft/item/Item id I
+mutable field net/minecraft/block/Block BLOCKS [Lnet/minecraft/block/Block;

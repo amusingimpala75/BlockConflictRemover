@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.github.amusingimpala75.blockconflictremover.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BlockCacherMixin",
+    "ExampleMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
