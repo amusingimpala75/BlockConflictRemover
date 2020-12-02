@@ -25,7 +25,8 @@ public abstract class BlockCacherMixin {
     @Shadow private static File mcDir;
 
     @Unique private String name;
-
+    
+    //Before you ask, yes, caching is necessary in this case. It fails otherwise complaining about "World cannot be cast to String"
     @Inject(at=@At("HEAD"), method = "joinWorld(Ljava/lang/String;)V")
     public void cacheName(String name, CallbackInfo info) {
         this.name = name;
