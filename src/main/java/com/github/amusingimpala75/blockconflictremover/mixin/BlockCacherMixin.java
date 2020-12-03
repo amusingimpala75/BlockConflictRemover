@@ -1,6 +1,6 @@
 package com.github.amusingimpala75.blockconflictremover.mixin;
 
-import com.github.amusingimpala75.blockconflictremover.block.FabricBlock;
+import com.github.amusingimpala75.blockconflictremover.block.CustomBlock;
 import com.github.amusingimpala75.blockconflictremover.util.Identifier;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
@@ -25,7 +25,7 @@ public abstract class BlockCacherMixin {
     @Shadow private static File mcDir;
 
     @Unique private String name;
-    
+
     //Before you ask, yes, caching is necessary in this case. It fails otherwise complaining about "World cannot be cast to String"
     @Inject(at=@At("HEAD"), method = "joinWorld(Ljava/lang/String;)V")
     public void cacheName(String name, CallbackInfo info) {
@@ -50,15 +50,15 @@ public abstract class BlockCacherMixin {
             for (int i = 0; i < Block.BLOCKS.length; i++) {
                 /*if (Block.BLOCKS[i] == null) {
 
-                } else */if (!(Block.BLOCKS[i] instanceof FabricBlock)) {
+                } else */if (!(Block.BLOCKS[i] instanceof CustomBlock)) {
                     CompoundTag subTag = new CompoundTag();
                     subTag.putString("name", "$vanilla$");
                     subTag.putByte("id", (byte) i);
                     tag.put("block" + i, subTag);
-                } else if (Block.BLOCKS[i] instanceof FabricBlock) {
+                } else if (Block.BLOCKS[i] instanceof CustomBlock) {
                     CompoundTag subtag = new CompoundTag();
                     subtag.putString("name", "");
-                    Identifier stringId = ((FabricBlock) Block.BLOCKS[i]).getStringId();
+                    Identifier stringId = ((CustomBlock) Block.BLOCKS[i]).getStringId();
                     stringId.toTag(subtag);
                     subtag.putByte("id", (byte) i);
                     tag.put("block" + i, subtag);
@@ -110,15 +110,15 @@ public abstract class BlockCacherMixin {
             /*System.out.println("Saving Block Registry to .minecraft/saves/" + name + "/block_registry.dat");
             CompoundTag tag = new CompoundTag();
             for (int i = 0; i < Block.BLOCKS.length; i++) {
-                if (!(Block.BLOCKS[i] instanceof FabricBlock)) {
+                if (!(Block.BLOCKS[i] instanceof CustomBlock)) {
                     CompoundTag subTag = new CompoundTag();
                     subTag.putString("name", "$vanilla$");
                     subTag.putByte("id", (byte) i);
                     tag.put("block" + i, subTag);
-                } else if (Block.BLOCKS[i] instanceof FabricBlock) {
+                } else if (Block.BLOCKS[i] instanceof CustomBlock) {
                     CompoundTag subtag = new CompoundTag();
                     subtag.putString("name", "");
-                    Identifier stringId = ((FabricBlock) Block.BLOCKS[i]).getStringId();
+                    Identifier stringId = ((CustomBlock) Block.BLOCKS[i]).getStringId();
                     stringId.toTag(subtag);
                     subtag.putByte("id", (byte) i);
                     tag.put("block" + i, subtag);
@@ -136,8 +136,8 @@ public abstract class BlockCacherMixin {
     @Unique
     private static int getCurrentIdFromBlock(Identifier id) {
         for (int i = 0; i < 256; i++) {
-            if (Block.BLOCKS[i] instanceof FabricBlock) {
-                if ((((FabricBlock) Block.BLOCKS[i]).getStringId()).equals(id)) {
+            if (Block.BLOCKS[i] instanceof CustomBlock) {
+                if ((((CustomBlock) Block.BLOCKS[i]).getStringId()).equals(id)) {
                     return i;
                 }
             }

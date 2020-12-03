@@ -15,4 +15,14 @@ public class BCR implements ModInitializer {
 		//TEST_BLOCK = new FabricBlock(200, Material.STONE, new Identifier("fabric", "test"));
 		//System.out.println(TEST_BLOCK.id);
 	}
+
+	//Cannot be int i = 0 as MC hangs on the load/create world screen
+	public static int getNextBlockId() {
+		for (int i = 1; i < Block.BLOCKS.length; i++) {
+			if (Block.BLOCKS[i] == null) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }
